@@ -61,9 +61,8 @@ class Password
         print "---------------------\n";
         if ($this->isValid) print "The Password is valid\n";
         else print "Invalid Password\n";
-
-        if (!$this->hasUpperCase) print "PASS_WITHOUT_UPPERCASE\n";
     }
+
     public function printErrors()
     {
         if (! $this->isValid)
@@ -76,7 +75,7 @@ class Password
     }
 }
 
-$pass1 = new Password('Jamones');
+$pass1 = new Password('jamones');
 $pass1->printValidation();
 $pass1->printErrors();
 
