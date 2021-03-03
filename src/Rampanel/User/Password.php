@@ -6,6 +6,7 @@ class Password
     private const DEFAULT_PASS  = 'me_da_a_jana';
     private const MIN_LEN       = 7;
 
+    private bool $matchUserRegex  = true;
     private bool $hasUpperCase  = false;
     private bool $hasLowerCase  = false;
     private bool $hasNumber     = false;
@@ -16,16 +17,28 @@ class Password
 
     public function __construct(
         protected $password,
-        protected $optional_regex_validator=null,
+        protected $user_regex_validator=null,
     )
     {
         // Some validations
+        $this->validateUserRegex();
         $this->validateUpperCase();
         $this->validateLowerCase();
         $this->validateNumber();
         $this->validateLen();
 
-        $this->isValid = $this->hasUpperCase && $this->hasLowerCase && $this->hasNumber && $this->hasLen;
+        $this->isValid = $this->hasUpperCase && $this->hasLowerCase && $this->hasNumber
+                        && $this->hasLen && $this->matchUserRegex ;
+    }
+
+    private function validateUserRegex()
+    {
+        if (!is_null($this->user_regex_validator))
+        {
+            $this->matchUserRegex = preg_match($this->user_regex_validator, $this->password);
+            if (!$this->matchUserRegex) $this->errors[] = 'PASS_WITHOUT_USER_REGEX';
+            return $this->matchUserRegex;
+        }
     }
 
     private function validateUpperCase()
@@ -79,6 +92,10 @@ $pass1 = new Password('jamones');
 $pass1->printValidation();
 $pass1->printErrors();
 
-$pass2 = new Password('Jamones123');
+$pass2 = new Password('Jamones123','@[.,*%&]@');
 $pass2->printValidation();
 $pass2->printErrors();
+
+$pass3 = new Password('Jamones123.,*&%!','@[.,*%&]@');
+$pass3->printValidation();
+$pass3->printErrors();
