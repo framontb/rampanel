@@ -88,14 +88,3 @@ class Password
     }
 }
 
-$pass1 = new Password('jamones');
-$pass1->printValidation();
-$pass1->printErrors();
-
-$pass2 = new Password('Jamones123','@[.,*%&]@');
-$pass2->printValidation();
-$pass2->printErrors();
-
-$pass3 = new Password('Jamones123.,*&%!','@[.,*%&]@');
-$pass3->printValidation();
-$pass3->printErrors();
