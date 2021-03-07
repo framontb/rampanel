@@ -16,5 +16,10 @@ abstract class AbstractUser
     ){}
 
     abstract public function authenticatePassword(string $key):bool;
+
+    public function __toString()
+    {
+        return "My name is ".$this->username." but I don't tell you my pass.\n";
+    }
 }
 

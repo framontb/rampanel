@@ -21,7 +21,7 @@ $pass1->printErrors();
 if ($pass1->isValid)
 {
     // Instantiate FtpUser object
-    $ftpUser = new FtpUser('Jumersindo', $pass1);
+    $ftpUser = new FtpUser('Jumersindo', $pass1, '/home/hosting/ftp');
 
     // try to authenticate some candidate passwords
     authenticate($ftpUser, 'badPass');

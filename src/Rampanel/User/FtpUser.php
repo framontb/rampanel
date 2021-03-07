@@ -1,7 +1,7 @@
 <?php
 namespace Rampanel\User;
 
-class FtpUser
+class FtpUser extends AbstractUser
 {
     public const TYPE = 'FTP';
 
@@ -9,10 +9,12 @@ class FtpUser
      * AbstractUser constructor.
      * @param string $username
      * @param Password $password
+     * @param string $folder
      */
     public function __construct(
         public string $username,
         private Password $password,
+        public string $folder,
     ){}
 
     public function authenticatePassword(string $key):bool
@@ -22,7 +24,8 @@ class FtpUser
 
     public function __toString()
     {
-        return "My name is ".$this->username." but I don't tell you my pass...";
+        return  parent::__toString().
+                "My folder as ftp user is ".$this->folder."\n";
     }
 }
 
