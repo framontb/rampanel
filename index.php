@@ -9,17 +9,42 @@ spl_autoload_register(
     }
 );
 
-use \Rampanel\User\User;
+use \Rampanel\User\FtpUser;
 use \Rampanel\User\Password;
 
-$pass1 = new \Rampanel\User\User('jamones');
+// Instatantiate a Password object
+$pass1 = new Password('Jamones3');
 $pass1->printValidation();
 $pass1->printErrors();
 
-$pass2 = new User('Jamones123','@[.,*%&]@');
-$pass2->printValidation();
-$pass2->printErrors();
+# If valid password create user
+if ($pass1->isValid)
+{
+    // Instantiate FtpUser object
+    $ftpUser = new FtpUser('Jumersindo', $pass1);
 
-$pass3 = new User('Jamones123.,*&%!','@[.,*%&]@');
-$pass3->printValidation();
-$pass3->printErrors();
+    // try to authenticate some candidate passwords
+    authenticate($ftpUser, 'badPass');
+    authenticate($ftpUser, 'Jamones3');
+}
+
+/**
+ * Authenticate a user pass
+ * @param $user
+ * @param $candidatePass
+ */
+function authenticate($user, $candidatePass)
+{
+    if ($user->authenticatePassword($candidatePass))
+    {
+        echo "------ authenticate -------\n";
+        echo "Good Pass\n";
+        echo $user;
+    }
+    else
+    {
+        echo "------ authenticate -------\n";
+        echo "Bad Pass\n";
+    }
+
+}

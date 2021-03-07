@@ -31,6 +31,14 @@ class Password
                         && $this->hasLen && $this->matchUserRegex ;
     }
 
+    public function authenticatePassword(string $key):bool
+    {
+        if ($key == $this->password)
+            return true;
+        else
+            return false;
+    }
+
     private function validateUserRegex()
     {
         if (!is_null($this->user_regex_validator))
