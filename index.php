@@ -9,8 +9,9 @@ spl_autoload_register(
     }
 );
 
-use \Rampanel\User\FtpUser;
 use \Rampanel\User\Password;
+use \Rampanel\User\FtpUser;
+use \Rampanel\User\UserList;
 
 // Instatantiate a Password object
 $pass1 = new Password('Jamones3');
@@ -34,6 +35,9 @@ if ($pass1->isValid)
     // Interface methods from AbstractUser
     if ($ftpUser->validatePassword());
     echo "Password validates\n";
+
+    // Type hinting the interface
+    $userList = new UserList($ftpUser);
 }
 
 /**
