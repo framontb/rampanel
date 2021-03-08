@@ -6,6 +6,7 @@ class FtpUser extends AbstractUser
 {
     public const TYPE = 'FTP';
 
+    use FtpUserTrait;
     /**
      * AbstractUser constructor.
      * @param string $username

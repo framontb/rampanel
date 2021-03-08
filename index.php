@@ -29,6 +29,7 @@ if ($pass1->isValid)
     authenticate($ftpUser, 'badPass');
     authenticate($ftpUser, 'Jamones3');
 
+    // Lab: Interface
     // Interface methods from AbstractUser
     if ($ftpUser->validateUsername());
         echo "Username validates\n";
@@ -53,6 +54,11 @@ if ($pass1->isValid)
     } finally {
         echo "FINALLY\n";
     }
+
+    // Lab: Trait
+    echo "Type of user: ";
+    echo $ftpUser->getType();
+    echo "\n";
 }
 
 /**
