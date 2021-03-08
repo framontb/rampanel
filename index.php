@@ -9,9 +9,10 @@ spl_autoload_register(
     }
 );
 
-use \Rampanel\User\Password;
-use \Rampanel\User\FtpUser;
-use \Rampanel\User\UserList;
+use \Rampanel\User\Password;    // Added to Abstract class as property
+use \Rampanel\User\FtpUser;     // Implementation of abstract class AbstractUser
+use \Rampanel\User\UserList;    // Collection of users in array for Type hinting
+use \Rampanel\User\BadUserException; // Custom Exception
 
 // Instatantiate a Password object
 $pass1 = new Password('Jamones3');
@@ -36,8 +37,22 @@ if ($pass1->isValid)
     if ($ftpUser->validatePassword());
     echo "Password validates\n";
 
-    // Type hinting the interface
+    // Lab: Type hinting the interface
     $userList = new UserList($ftpUser);
+
+    // Lab: Exceptions
+    try {
+        // throw new Exception ("Me Da A Jana");
+        throw new BadUserException($ftpUser, 7);
+    } catch (BadUserException $e) {
+        echo "BEGIN BadUserException MSG ---> \n";
+        echo $e->getMessage();
+        echo "<--- END BadUserException MSG\n";
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    } finally {
+        echo "FINALLY\n";
+    }
 }
 
 /**
