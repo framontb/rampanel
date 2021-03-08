@@ -4,7 +4,7 @@ namespace Rampanel\User;
 class Password
 {
     private const DEFAULT_PASS  = 'me_da_a_jana';
-    private const MIN_LEN       = 7;
+    private const PASS_MIN_LEN       = 7;
 
     private bool $matchUserRegex  = true;
     private bool $hasUpperCase  = false;
@@ -20,15 +20,7 @@ class Password
         protected $user_regex_validator=null,
     )
     {
-        // Some validations
-        $this->validateUserRegex();
-        $this->validateUpperCase();
-        $this->validateLowerCase();
-        $this->validateNumber();
-        $this->validateLen();
-
-        $this->isValid = $this->hasUpperCase && $this->hasLowerCase && $this->hasNumber
-                        && $this->hasLen && $this->matchUserRegex ;
+        $this->validatePassword();
     }
 
     public function authenticatePassword(string $key):bool
@@ -39,40 +31,55 @@ class Password
             return false;
     }
 
-    private function validateUserRegex()
+    public function validatePassword():bool
+    {
+        // Some validations
+        $this->validateUserRegex();
+        $this->validateUpperCase();
+        $this->validateLowerCase();
+        $this->validateNumber();
+        $this->validateLen();
+
+        $this->isValid = $this->hasUpperCase && $this->hasLowerCase && $this->hasNumber
+            && $this->hasLen && $this->matchUserRegex ;
+
+        return $this->isValid;
+    }
+
+    private function validateUserRegex():bool
     {
         if (!is_null($this->user_regex_validator))
         {
             $this->matchUserRegex = preg_match($this->user_regex_validator, $this->password);
             if (!$this->matchUserRegex) $this->errors[] = 'PASS_WITHOUT_USER_REGEX';
-            return $this->matchUserRegex;
         }
+        return $this->matchUserRegex;
     }
 
-    private function validateUpperCase()
+    private function validateUpperCase():bool
     {
         $this->hasUpperCase = preg_match('@[A-Z]@', $this->password);
         if (!$this->hasUpperCase) $this->errors[] = 'PASS_WITHOUT_UPPERCASE';
         return $this->hasUpperCase;
     }
 
-    private function validateLowerCase()
+    private function validateLowerCase():bool
     {
         $this->hasLowerCase = preg_match('@[a-z]@', $this->password);
         if (!$this->hasLowerCase) $this->errors[] = 'PASS_WITHOUT_LOWERCASE';
         return $this->hasLowerCase;
     }
 
-    private function validateNumber()
+    private function validateNumber():bool
     {
         $this->hasNumber = preg_match('@[0-9]@', $this->password);
         if (!$this->hasNumber) $this->errors[] = 'PASS_WITHOUT_NUMBER';
         return $this->hasNumber ;
     }
 
-    private function validateLen()
+    private function validateLen():bool
     {
-        $this->hasLen = (strlen($this->password) > self::MIN_LEN);
+        $this->hasLen = (strlen($this->password) > self::PASS_MIN_LEN);
         if (!$this->hasLen) $this->errors[] = 'PASS_WITHOUT_LEN';
         return $this->hasLen ;
     }

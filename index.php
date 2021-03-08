@@ -26,10 +26,18 @@ if ($pass1->isValid)
     // try to authenticate some candidate passwords
     authenticate($ftpUser, 'badPass');
     authenticate($ftpUser, 'Jamones3');
+
+    // Interface methods
+    if ($ftpUser->validateUsername());
+        echo "Username validates\n";
+
+    // Interface methods
+    if ($ftpUser->validatePassword());
+    echo "Password validates\n";
 }
 
 /**
- * Authenticate a user pass
+ * Authenticate a user pass and echo messages with result
  * @param $user
  * @param $candidatePass
  */
@@ -38,13 +46,13 @@ function authenticate($user, $candidatePass)
     if ($user->authenticatePassword($candidatePass))
     {
         echo "------ authenticate -------\n";
-        echo "Good Pass\n";
+        echo "Access Granted.\n";
         echo $user;
     }
     else
     {
         echo "------ authenticate -------\n";
-        echo "Bad Pass\n";
+        echo "Password doesn't authenticate.\n";
     }
 
 }
