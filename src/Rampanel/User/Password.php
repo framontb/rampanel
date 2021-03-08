@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Rampanel\User;
 
 class Password
@@ -58,21 +59,21 @@ class Password
 
     private function validateUpperCase():bool
     {
-        $this->hasUpperCase = preg_match('@[A-Z]@', $this->password);
+        $this->hasUpperCase = (bool)preg_match('@[A-Z]@', $this->password);
         if (!$this->hasUpperCase) $this->errors[] = 'PASS_WITHOUT_UPPERCASE';
         return $this->hasUpperCase;
     }
 
     private function validateLowerCase():bool
     {
-        $this->hasLowerCase = preg_match('@[a-z]@', $this->password);
+        $this->hasLowerCase = (bool)preg_match('@[a-z]@', $this->password);
         if (!$this->hasLowerCase) $this->errors[] = 'PASS_WITHOUT_LOWERCASE';
         return $this->hasLowerCase;
     }
 
     private function validateNumber():bool
     {
-        $this->hasNumber = preg_match('@[0-9]@', $this->password);
+        $this->hasNumber = (bool)preg_match('@[0-9]@', $this->password);
         if (!$this->hasNumber) $this->errors[] = 'PASS_WITHOUT_NUMBER';
         return $this->hasNumber ;
     }

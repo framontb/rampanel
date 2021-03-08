@@ -1,5 +1,5 @@
-
 <?php
+declare(strict_types=1);
 
 define('BASE_DIR', __DIR__);
 spl_autoload_register(
@@ -27,11 +27,11 @@ if ($pass1->isValid)
     authenticate($ftpUser, 'badPass');
     authenticate($ftpUser, 'Jamones3');
 
-    // Interface methods
+    // Interface methods from AbstractUser
     if ($ftpUser->validateUsername());
         echo "Username validates\n";
 
-    // Interface methods
+    // Interface methods from AbstractUser
     if ($ftpUser->validatePassword());
     echo "Password validates\n";
 }
